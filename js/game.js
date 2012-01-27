@@ -95,6 +95,7 @@
 		can = document.getElementById("cnvs");
 		ctx = can.getContext('2d');
 		bindMouse();
+		$("#url").html(document.location.href);
 		
 		$('#tMsg').keydown(function(event) {
 			if (event.keyCode == '13') {

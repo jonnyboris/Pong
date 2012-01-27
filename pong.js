@@ -33,7 +33,11 @@ io.sockets.on('connection', function (socket) {
 	socket.on('msg', function(data){
 		//console.log(data);
 		if(socket.isHost) {
-			socket.peer.emit('rMsg', data);
+			if(socket.peer) {
+				socket.peer.emit('rMsg', data);
+			} else {
+					socket.emit('rMsg', "NOT CONNECTED YET");
+			}
 		} else {
 			socket.hoster.emit('rMsg', data);
 		}
