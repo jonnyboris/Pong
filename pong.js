@@ -3,8 +3,6 @@ var app = require('express').createServer()
   , io = require('socket.io').listen(app)
   , clients = {};
 
-var tb = false;
-
 app.use('/js', express.static(__dirname + '/js'));
 app.use('/assets', express.static(__dirname + '/assets'));
 app.listen(1337);
@@ -22,7 +20,6 @@ app.get('/:hash', function (req, res) {
 io.sockets.on('connection', function (socket) {
   	
 	socket.on('move', function(data){
-		//console.log(data);
 		if(socket.isHost) {
 			socket.peer.emit('opponentMove', data);
 		} else {
@@ -31,7 +28,6 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('msg', function(data){
-		//console.log(data);
 		if(socket.isHost) {
 			if(socket.peer) {
 				socket.peer.emit('rMsg', data);
@@ -44,7 +40,6 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('event', function(data){
-		//console.log(data);
 		if(socket.isHost) {
 			socket.peer.emit('rEvent', data);
 		} else {
@@ -52,7 +47,6 @@ io.sockets.on('connection', function (socket) {
 		}
 	});
 	socket.on('ready', function(data){
-		//console.log("ready");	
 		socket.emit('start', data);
 		socket.hoster.emit('start', data);
 	});
@@ -74,16 +68,13 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('joiner', function (data) {
-
 		len = io.sockets.clients(data).length;
-
 		if(len == undefined || len == 0){
 			socket.emit('host');
 			socket.join(data);
 			socket.isHost = true;
 			socket.isPeer = false;
 			socket.room = data;
-			//console.log("joined");
 		}
 		else if(len == 1){
 			socket.emit('peer');
@@ -101,9 +92,6 @@ io.sockets.on('connection', function (socket) {
 		else{
 			socket.emit('warn', "This connection is full. Please try later.");
 		}
-
-		//io.sockets.in(data).emit('info', socket.id + " joined!");
-
 	});	
 });
 

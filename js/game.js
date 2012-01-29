@@ -22,7 +22,7 @@
 		latestType = 0,
 		playerToUpdate,
 		lEv = false,
-		hostBoxMsg = "<h2>You have started a new game!</h2><p>Send this URL: <input id='bUrl' size=20 /> to someone to challenge them to a game.</p><br /><p>You are playing from the left </p><p> <img class='left' src='assets/arrow.png' /></p><p><a class='' href='/'>How to play?!</a></p><p><a class='close ok' style='font-size:20pt; text-decoration: none;' href='/'>OK</a></p>",
+		hostBoxMsg = "<h2>You have started a new game!</h2><p>Send this URL: <input id='bUrl' size=20 /> to someone in order to challenge them to a game.</p><p style='padding-top 3px'>You are playing from the left </p><p> <img class='left' src='assets/arrow.png' /></p><p><a class='' href='/'>How to play?!</a></p><p><a class='close ok' style='font-size:20pt; text-decoration: none;' href='/'>OK</a></p>",
 		peerBoxMsg = "<h2>You have joined a game!</h2> <p>You are playing from the right </p><p> <img  src='assets/arrow.png' /></p><p><a class='' href='/'>How to play?!</a></p><p><a class='pclose' style='font-size:20pt; text-decoration: none;' href='/'>OK</a></p>";
 
 	//some code adapted from share.gun.io
