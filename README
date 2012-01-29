@@ -1,6 +1,6 @@
 Two player Pong using WebScokets.
 
-This is still a work in progress, but a quite laggy/buggy demo can be found here: OFFLINE TILL MONDAY
+This is still a work in progress, but a quite laggy/buggy demo can be found here: http://jonnyboris.dyndns.org:1337/
 
 Send the URL of the page to the person you want to challenge. Whoever starts the game will be the player on the left, leaving the second player on the right. You can add spin to the ball, just like in the original pong, by moving your paddle just as the ball hits.
 

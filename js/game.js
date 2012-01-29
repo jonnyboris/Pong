@@ -21,7 +21,9 @@
 		latestEvent = null,
 		latestType = 0,
 		playerToUpdate,
-		lEv = false;
+		lEv = false,
+		hostBoxMsg = "<h2>You have started a new game!</h2><p>Send this URL: <input id='bUrl' size=20 /> to someone to challenge them to a game.</p><br /><p>You are playing from the left </p><p> <img class='left' src='assets/arrow.png' /></p><p><a class='' href='/'>How to play?!</a></p><p><a class='close ok' style='font-size:20pt; text-decoration: none;' href='/'>OK</a></p>",
+		peerBoxMsg = "<h2>You have joined a game!</h2> <p>You are playing from the right </p><p> <img  src='assets/arrow.png' /></p><p><a class='' href='/'>How to play?!</a></p><p><a class='pclose' style='font-size:20pt; text-decoration: none;' href='/'>OK</a></p>";
 
 	//some code adapted from share.gun.io
 	socket.on('connect', function(data){
@@ -29,20 +31,31 @@
 	});
 	
 	socket.on('host', function(data){
+		var l = ((window.innerWidth /2) - 200);
 		console.log("You're hosting this party!");
-		$('#wBox').show();
+		//$('#wBox').show();
 		$('#stBox').remove();
 		player = new Player(0, 0);
 		opponent = new Player(1, 790);			
 		left = player;
 		right = opponent;
 		//bindMouse();
+		
+		$("#msgBox").html(hostBoxMsg);
+		$("#msgBox").offset({left: l}).slideFadeToggle(function() { 
+				$("#bUrl").val(document.location.href);
+        });
 	});
 	
 	socket.on('peer', function(data){
+		var l = ((window.innerWidth /2) - 200);
 		console.log("You're not hosting.");
-		$('#stBox').show();
+		//$('#stBox').show();
 		peer = true;
+		
+		$("#msgBox").html(peerBoxMsg);
+		$("#msgBox").offset({left: l}).slideFadeToggle();
+		
 		$('#stBox').dblclick(function() {
 			ball = new Ball(400, 200);
 			socket.emit('ready', JSON.stringify(ball));
@@ -90,12 +103,14 @@
 			doReset();
 	});
 	$(document).ready(function() {
+		
 		offsetTop = $("#cnvs").offset().top;
 		gameBottom = (offsetTop + 350);
 		can = document.getElementById("cnvs");
 		ctx = can.getContext('2d');
 		bindMouse();
 		$("#url").html(document.location.href);
+		
 		
 		$('#tMsg').keydown(function(event) {
 			if (event.keyCode == '13') {
@@ -121,6 +136,18 @@
 			alert("something went wrong, are you using an old/IE browser?");
 		}
 	});
+	
+	$(".close").live('click', function() {
+            $("#msgBox").slideFadeToggle();
+			$('#wBox').show();
+            return false;
+    });
+	
+	$(".pclose").live('click', function() {
+            $("#msgBox").slideFadeToggle();
+			$('#stBox').show();
+            return false;
+    });
 	
 	function step() {
 		if(!reset) {
@@ -382,5 +409,9 @@
 		this.dX = dX;
 		this.dY = dY; 
 	}
+	
+	$.fn.slideFadeToggle = function(easing, callback) {
+        return this.animate({ opacity: 'toggle', height: 'toggle' }, "fast", easing, callback);
+    };
 	
 })();
