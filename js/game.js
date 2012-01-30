@@ -22,7 +22,7 @@
 		latestType = 0,
 		playerToUpdate,
 		lEv = false,
-		hostBoxMsg = "<h2>You have started a new game!</h2><p>Send this URL: <input id='bUrl' size=20 /> to someone in order to challenge them to a game.</p><p style='padding-top 3px'>You are playing from the left </p><p> <img class='left' src='assets/arrow.png' /></p><p><a class='' href='/'>How to play?!</a></p><p><a class='close ok' style='font-size:20pt; text-decoration: none;' href='/'>OK</a></p>",
+		hostBoxMsg = "<h2>You have started a new game!</h2><p>Send this URL: <input id='bUrl' onClick='this.select();' size=20 /> to someone in order to challenge them to a game.</p><p style='padding-top 3px'>You are playing from the left </p><p> <img class='left' src='assets/arrow.png' /></p><p><a class='' href='/'>How to play?!</a></p><p><a class='close ok' style='font-size:20pt; text-decoration: none;' href='/'>OK</a></p>",
 		peerBoxMsg = "<h2>You have joined a game!</h2> <p>You are playing from the right </p><p> <img  src='assets/arrow.png' /></p><p><a class='' href='/'>How to play?!</a></p><p><a class='pclose' style='font-size:20pt; text-decoration: none;' href='/'>OK</a></p>";
 
 	//some code adapted from share.gun.io
@@ -33,24 +33,23 @@
 	socket.on('host', function(data){
 		var l = ((window.innerWidth /2) - 200);
 		console.log("You're hosting this party!");
-		//$('#wBox').show();
 		$('#stBox').remove();
 		player = new Player(0, 0);
 		opponent = new Player(1, 790);			
 		left = player;
 		right = opponent;
-		//bindMouse();
 		
 		$("#msgBox").html(hostBoxMsg);
 		$("#msgBox").offset({left: l}).slideFadeToggle(function() { 
-				$("#bUrl").val(document.location.href);
+				//$("#bUrl").val(document.location.href);
+				document.getElementById('bUrl').value = document.location.href;
+				console.log(1);
         });
 	});
 	
 	socket.on('peer', function(data){
 		var l = ((window.innerWidth /2) - 200);
 		console.log("You're not hosting.");
-		//$('#stBox').show();
 		peer = true;
 		
 		$("#msgBox").html(peerBoxMsg);
@@ -66,16 +65,12 @@
 		opponent = new Player(0, 0);			
 		left = opponent;
 		right = player;
-		//bindMouse();
 	});
 	
 	socket.on('start', function(data){
 		$('#wBox').hide();
-		//console.log("go time " + data);
 		ball = JSON.parse(data);
-		//console.log(ball);
 		time = setInterval(step, 20);
-		//console.log("is right: " + (right == player) + " Is left: " + (left == player));
 	});
 	
 	socket.on('newBall', function(data){
@@ -89,11 +84,12 @@
 	socket.on('rMsg', function(data){
 		$("#chat").append("Opponent: " + data + "\n");	
 		$("#chat").scrollTop(99999);
+	
+
+		//#7AF619.animate({ opacity: 'toggle', height: 'toggle' }, "fast", easing, callback);
 	})
 
 	socket.on('rEvent', function(data){
-		//console.log(data);
-		//console.log("latest event received");
 		latestEvent = JSON.parse(data);
 		lEv = true;
 		
@@ -102,6 +98,7 @@
 	socket.on('reset', function(data){
 			doReset();
 	});
+	
 	$(document).ready(function() {
 		
 		offsetTop = $("#cnvs").offset().top;
