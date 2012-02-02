@@ -38,6 +38,9 @@ To start playing, open up [localhost:1337](localhost:1337) or host:port
 ### License
 
 PONG - Affero GNU General Public License.
+
 socket.io - MIT License
+
 jQuery - [jquery.org/license](http://jquery.org/license/)
+
 jQuery URL Parser plugin - [unlicense.org](http://unlicense.org/)
