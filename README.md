@@ -17,9 +17,11 @@ Install
 
 ### Requirements
 
-[npm](http://npmjs.org/)
-[express](http://expressjs.com/)
-[socket.io](http://socket.io/)
+* [npm](http://npmjs.org/)
+
+* [express](http://expressjs.com/)
+
+* [socket.io](http://socket.io/)
 
 ### Installation
 
